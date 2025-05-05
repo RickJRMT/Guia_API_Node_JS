@@ -136,3 +136,107 @@ async function manejarSubmit(e) {
         alert('Error al guardar los datos: ' + error.message);
     }
 }
+
+// Crea una persona nueva en la base de datos
+async function crearPersona(persona) {
+    const response = await fetch(`${API_URL}/personas`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(persona)
+    });
+    return await response.json(); // Devuelve el objeto persona nuevo con id
+}
+
+// Actualiza una persona existente
+async function actualizarPersona(persona) {
+    const response = await fetch(`${API_URL}/personas/${persona.id_persona}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(persona)
+    });
+    return await response.json();
+}
+
+// Elimina persona (y su imagen si existe)
+async function eliminarPersona(id) {
+    if (confirm('¿Está seguro de eliminar esta persona')) {
+        try {
+            await fetch(`${API_URL}/imagenes/eliminar/personas/id_persona/${id}`, { method: 'DELETE' }); // Elimina imagen
+            await fetch(`${API_URL}/persona/${id}`, { method: 'DELETE' }); //Elimina persona
+            cargarPersonas(); // Recarga la lista
+        } catch (error) {
+            console.error('Error al eliminar persona: ', error);
+            alert('Error al eliminar la persona: ' + error.message);
+        }
+    }
+}
+
+// Llena el formulario con los datos de una persona para editar
+async function editarPersona(id) {
+    const persona = personas.files(p => p.id_persona === id);
+    if (persona) {
+        document.getElementById('id_persona').value = persona.id_persona;
+        document.getElementById('nombre').value = persona.nombre;
+        document.getElementById('apellido').value = persona.apellido;
+        document.getElementById('tipo_identificacion').value = persona.tipo_identificacion;
+        document.getElementById('nuip').value = persona.nuip;
+        document.getElementById('email').value = persona.email;
+        document.getElementById('clave').value = ''; // No se muestra la contraseña
+        document.getElementById('salario').value = persona.salario;
+        document.getElementById('activo').checked = persona.activo;
+
+        // Carga la imagen si existe
+        try {
+            const response = await fetch(`${API_URL}/imagenes/obtener/personas/id_persona/${id}`);
+            const data = await response.json();
+            if (data.imagen) {
+                previewImagen.src = `data:image/jpeg;base64,${data.imagen}`;
+                previewImagen.style.display = 'block';
+            } else {
+                previewImagen.style.display = 'none';
+                previewImagen.src = '';
+            }
+        } catch (error) {
+            console.error('Error al cargar imagen: ', error);
+            previewImagen.style.display = 'none';
+            previewImagen.src = '';
+        }
+    }
+}
+
+// Limpia todos los campos del formulario
+function limpiarFormulario() {
+    personaForm.reset();
+    document.getElementById('id_persona').value = '';
+    previewImagen.style.display = 'none';
+    previewImagen.src = '';
+}
+
+// Muestra una previsualización de la imagen seleccionada
+function manejarImagen(e) {
+    const file = e.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            previewImagen.src = e.target.result;
+            previewImagen.style.display = 'block';
+        }
+        reader.readAsDataURL(file);
+    } else {
+        previewImagen.style.display = 'none';
+        previewImagen.src = '';
+    }
+}
+
+// Convierte imagen a base64 para enviarla al backend
+function convertirImagenABase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            const base64 = reader.result.split(',')[1]; // Elimina el prefijo del data URI
+            resolve(base64);
+        };
+        reader.onerror = error => reject(error);
+    });
+}
