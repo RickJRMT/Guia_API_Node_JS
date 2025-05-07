@@ -34,7 +34,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try {
         // Utilizar el método obtenerUno con el ID recibido en la URL
-        const persona = await crud.obtenerTodo(tabla, idCampo, req.params.id);
+        const persona = await crud.obtenerUno(tabla, idCampo, req.params.id);
 
         // Respuesta con datos de la persona en formato JSON
         res.json(persona);

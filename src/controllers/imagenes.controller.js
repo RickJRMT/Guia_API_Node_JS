@@ -19,8 +19,8 @@ class ImagenesController {
             const bufferImagen = Buffer.from(imagenBase64, 'base64');
 
             // Crear la consulta para actualizar el campo "imagen" del registro
-            const query = `UPDATE ?? SET imagen ? WHERE ?? = ?`;
-            const [result] = await db.query(db.query, [tabla, bufferImagen, campoId, id]);
+            const query = `UPDATE ?? SET imagen = ? WHERE ?? = ?`;
+            const [result] = await db.query(query, [tabla, bufferImagen, campoId, id]);
 
             // Validar si la actualización fue exitosa
             if (result.affectedRows > 0) {
@@ -65,7 +65,7 @@ class ImagenesController {
     async eliminarImagen(tabla, campoId, id) {
         try {
             // Verificar que el registrado exista
-            const [registro] = await db.query(`SELECT * FROM ?? WHARE = ?`, [tabla, campoId, id]);
+            const [registro] = await db.query(`SELECT * FROM ?? WHERE ?? = ?`, [tabla, campoId, id]);
 
             if (registro.length === 0) {
                 return { error: 'No se encontró el registro con el ID proporcionado.' };

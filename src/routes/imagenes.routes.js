@@ -49,7 +49,7 @@ router.delete('/eliminar/:tabla/:campoId/:id', async (req, res) => {
 
 // Ruta para insertar una imagen (Recibe la imagen en base64)
 router.post('/insertar/:tabla/:campoId/:id', async (req, res) => {
-    const { table, campoId, id } = req.params;
+    const { tabla, campoId, id } = req.params;
     const imagenBase64 = req.body.imagen;
 
     if (!imagenBase64) {

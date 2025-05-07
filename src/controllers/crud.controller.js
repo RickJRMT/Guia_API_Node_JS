@@ -42,7 +42,7 @@ class CrudController {
     async actualizar(tabla, idCampo, id, data) {
         try {
             // Ejecuta una consulta UPDATE con los datos nuevos
-            const [resultado] = await db.query(`UPDATE ?? SET ? WHERE = ?`, [tabla, data, idCampo, id]);
+            const [resultado] = await db.query(`UPDATE ?? SET ? WHERE ?? = ?`, [tabla, data, idCampo, id]);
             // Si no se afectó ninguna fila, es que el registro no existía
             if (resultado.affectedRows === 0) {
                 throw new Error('Registro no encontrado');
@@ -61,7 +61,7 @@ class CrudController {
             const [resultado] = await db.query(`DELETE FROM ?? WHERE ?? = ?`, [tabla, idCampo, id]);
             // Si no se eliminó niguna fila, es que el ID no existe
             if (resultado.affectedRows === 0) {
-                throw new Error('Regristro eliminado');
+                throw new Error('Regristro no encontrado');
             }
             // Devuelve un mensaje de éxito
             return { mensaje: 'Registro eliminado correctamente' };
