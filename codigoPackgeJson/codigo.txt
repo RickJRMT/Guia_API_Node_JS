@@ -1,0 +1,18 @@
+En este documento de texto puedes encontrar el "npm install" de los paquetes que son necesarios como la carpeta "node_modules"
+
+Dependencias principales para instalar
+
+Se copea el siguiente código en consola de comandos para librerías, paquetes  y dependencias
+
+
+npm install express mysql2 dotenv cors multer bcrypt jsonwebtoken
+
+El siguiente código es dependencia de desarrollo Nodemon comando de instalación
+
+
+npm install --save-dev nodemon
+
+
+Para ejecutarlo y conecte a la base de datos se utiliza el siguiente código
+
+npm run dev

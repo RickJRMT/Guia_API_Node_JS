@@ -1,5 +1,5 @@
 // Variables globales
-const API_URL = 'http://localhost:300/api'; // Constante que almacene la URL que se conecta al servidor
+const API_URL = 'http://localhost:3000/api'; // Constante que almacene la URL que se conecta al servidor
 let personas = []; // Variable que almacenará el listado de personas obtenidas del backend
 
 // Elementos del DOM
@@ -7,7 +7,7 @@ const personasForm = document.getElementById('personaForm'); // Formulario princ
 const tablaPersonasBody = document.getElementById('tablaPersonasBody'); // Cuerpo de la tabla donde se insertan las filas
 const btnCancelar = document.getElementById('btnCancelar'); // Este botón de cancelar limpia el formulario
 const imagenInput = document.getElementById('imagen'); // Input de tipo archivo para subir o cargar la imagen
-const previewImagen = document.getElementById('previewImgen'); // Elemento imagen de previsualización
+const previewImagen = document.getElementById('previewImagen'); // Elemento imagen de previsualización
 
 // Event Listeners
 document.addEventListener('DOMContentLoaded', cargarPersonas); // Cuando el DOM este listo, se cargan las personas
@@ -34,7 +34,7 @@ async function mostrarPersonas() {
         const tr = document.createElement('tr'); // Limpiar el contenido actual
 
         // Cargar la imagen si exite
-        let imagenHtml = 'Sin imagen';
+        let imagenHTML = 'Sin imagen';
         try {
             const response = await fetch(`${API_URL}/imagenes/obtener/personas/id_persona/${persona.id_persona}`);
             // Se realiza una petición al backend para obtener la imagen de la persona en base64
@@ -53,7 +53,7 @@ async function mostrarPersonas() {
             <td style="border: 1px solid #ddd; text-align: center; padding: 8px;">${persona.nombre}</td>
             <td style="border: 1px solid #ddd; text-align: center; padding: 8px;">${persona.apellido}</td>
             <td style="border: 1px solid #ddd; text-align: center; padding: 8px;">${persona.email}</td>
-            <td style="border: 1px solid #ddd; text-align: center; padding: 8px;">${imagenHtml}</td>
+            <td style="border: 1px solid #ddd; text-align: center; padding: 8px;">${imagenHTML}</td>
             <td style="border: 1px solid #ddd; text-align: center; padding: 8px;">
                 <button onclick="editarPersona(${persona.id_persona})">Editar</button>
                 <button onclick="eliminarPersona(${persona.id_persona})">Eliminar</button>
@@ -99,7 +99,7 @@ async function manejarSubmit() {
             // Si es una persona nueva se procede a crearla
             const nuevaPersona = await crearPersona(persona);
             // Si hay una imagen seleccionada, se sube
-            if (imagenInput.file[0]) {
+            if (imagenInput.files[0]) {
                 const imagenBase64 = await convertirImagenABase64(imagenInput.files[0]);
                 await fetch(`${API_URL}/imagenes/insertar/personas/id_personas/${nuevaPersona}`, {
                     method: 'POST',

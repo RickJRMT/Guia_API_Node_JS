@@ -11,7 +11,7 @@ const previewImagen = document.getElementById('previewImagen'); // Imagen para p
 
 // Event Listeners
 document.addEventListener('DOMContentLoaded', cargarPersonas); // Carga personas al iniciar la página
-personaForm.addEventListener('submit', manajerSubmit); // Enviar el formulario
+personaForm.addEventListener('submit', manejarSubmit); // Enviar el formulario
 btnCancelar.addEventListener('click', limpiarFormulario); // Botón de cancelar limpia el formulario
 imagenInput.addEventListener('change', manejarImagen); // Cargar previsualización cuando se selecciona imagen
 
@@ -20,7 +20,7 @@ async function cargarPersonas() {
     try {
         const response = await fetch(`${API_URL}/personas`); // Solicitud GET a la API
         personas = await response.json(); // Almacena respuesta en arreglo
-        await mostrarPersonas();
+        await mostrarPersonas(); // Muestra las personas en la tabla
     } catch (error) {
         console.error('Error al cargar personas: ', error);
     }
