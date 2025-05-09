@@ -89,6 +89,7 @@ async function mostrarPersonas() {
         celdas[1].textContent = persona.nombre;
         celdas[2].textContent = persona.apellido;
         celdas[3].textContent = persona.email;
+        celdas[4].textContent = persona.salario;
 
         // Imagen por defecto
         let imagenHTML = 'Sin imagen';
@@ -104,7 +105,8 @@ async function mostrarPersonas() {
             console.error('Error al cargar imagen: ', error);
         }
 
-        celdas[4].innerHTML = imagenHTML;
+        celdas[5].innerHTML = imagenHTML;
+        celdas[6].textContent = persona.activo
 
         // Botones de acción
         const btnEditar = clone.querySelector('.btn-editar');

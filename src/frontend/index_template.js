@@ -68,7 +68,9 @@ async function mostrarPersonas() {
         tds[1].textContent = persona.nombre;        // Nombre
         tds[2].textContent = persona.apellido;      // Apellido
         tds[3].textContent = persona.email;         // Email
-        tds[4].innerHTML = imagenHTML;              // Imagen (si existe, muestra imagen, si no, "Sin imagen")
+        tds[4].textContent = persona.salario;       // Salario
+        tds[5].innerHTML = imagenHTML;              // Imagen (si existe, muestra imagen, si no, "Sin imagen")
+        tds[6].textContent = persona.activo;        // Activo
 
         // Busca los botones de editar y eliminar dentro del clon
         const btnEditar = clone.querySelector('.btn-editar');
@@ -95,10 +97,10 @@ async function manejarSubmit(e) {
         nombre: document.getElementById('nombre').value,
         apellido: document.getElementById('apellido').value,
         tipo_identificacion: document.getElementById('tipo_identificacion').value,
-        nuip: document.getElementById('nuip').value,
+        nuip: parseInt(document.getElementById('nuip')).value,
         email: document.getElementById('email').value,
         clave: document.getElementById('clave').value,
-        salario: parseFloat(document.getElementById('sakarui').value),
+        salario: parseFloat(document.getElementById('salario').value),
         activo: document.getElementById('activo').checked
     };
 
@@ -116,7 +118,7 @@ async function manejarSubmit(e) {
                 });
             }
             // Actualizar los datos de la persona
-            await actualizarPersona(personas);
+            await actualizarPersona(persona);
         } else {
             // Si es nueva persona
             const nuevaPersona = await crearPersona(persona); // Crear persona
@@ -173,7 +175,7 @@ async function eliminarPersona(id) {
 
 // Llena el formulario con los datos de una persona para editar
 async function editarPersona(id) {
-    const persona = personas.files(p => p.id_persona === id);
+    const persona = personas.find(p => p.id_persona === id);
     if (persona) {
         document.getElementById('id_persona').value = persona.id_persona;
         document.getElementById('nombre').value = persona.nombre;

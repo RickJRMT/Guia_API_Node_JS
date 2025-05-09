@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD de Personas e Imágenes N3°</title>
+    <title>CRUD de Personas e Imágenes N°3</title>
     <link rel="stylesheet" href="index_query.css">
 </head>
 
 <body>
-    <h1>Gestión de Personas</h1>
+    <h1>Gestión de Personas N°3</h1>
 
     <!-- Formulario para crear/editar personas -->
     <form id="personaForm">
@@ -38,6 +38,7 @@
                     <option value="CC">Cédula de Ciudadania</option>
                     <option value="TI">Tarjeta de Identidad</option>
                     <option value="CE">Cédula de Extranjeria</option>
+                    <option value="TV">Tarjeta de Visita</option>
                 </select>
             </label>
         </div>
@@ -76,7 +77,7 @@
         <div>
             <label for="imagen">Imagen:</label>
             <input type="file" id="imagen" accept="image/*">
-            <img id="previewImagen">
+            <img src="#" id="previewImagen" alt="#imagen">
         </div>
 
         <button type="submit" id="btnGuardar">Guardar</button>
@@ -91,7 +92,9 @@
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>Email</th>
+                <th>Salario</th>
                 <th>Imagen</th>
+                <th>Estado</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -102,6 +105,8 @@
 
     <template id="template">
         <tr>
+            <td></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>

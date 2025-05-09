@@ -53,7 +53,9 @@ async function mostrarPersonas() {
             <td style="border: 1px solid #ddd; text-align: center; padding: 8px;">${persona.nombre}</td>
             <td style="border: 1px solid #ddd; text-align: center; padding: 8px;">${persona.apellido}</td>
             <td style="border: 1px solid #ddd; text-align: center; padding: 8px;">${persona.email}</td>
+            <td style="border: 1px solid #ddd; text-align: center; padding: 8px;">${persona.salario}</td>
             <td style="border: 1px solid #ddd; text-align: center; padding: 8px;">${imagenHTML}</td>
+            <td style="border: 1px solid #ddd; text-align: center; padding: 8px;">${persona.activo}</td>
             <td style="border: 1px solid #ddd; text-align: center; padding: 8px;">
                 <button onclick="editarPersona(${persona.id_persona})">Editar</button>
                 <button onclick="eliminarPersona(${persona.id_persona})">Eliminar</button>
@@ -63,7 +65,7 @@ async function mostrarPersonas() {
     }
 }
 
-async function manejarSubmit() {
+async function manejarSubmit(e) {
     e.preventDefault(); // Evita que el formulario recargue la página
 
     // Obtener o recopilar los valores del formulario y crear un objeto persona
@@ -75,10 +77,10 @@ async function manejarSubmit() {
         nombre: document.getElementById('nombre').value,
         apellido: document.getElementById('apellido').value,
         tipo_identificacion: document.getElementById('tipo_identificacion').value,
-        nuip: document.getElementById('nuip').value,
+        nuip: parseInt(document.getElementById('nuip')).value,
         email: document.getElementById('email').value,
         clave: document.getElementById('clave').value,
-        salario: document.getElementById('salario').value,
+        salario: parseFloat(document.getElementById('salario')).value,
         activo: document.getElementById('activo').checked
     };
 
