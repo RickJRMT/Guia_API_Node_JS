@@ -7,7 +7,7 @@ const cors = require('cors');
 const app = express();
 // Crear una instancia de aplicación Express
 
-const imagenesRoutes = require('./routes/imagenes.routes');
+const imagenesRoutes = require('./backend/routes/imagenes.routes');
 // Importar las rutas para el manejo de imágenes desde el archivo correspondiente
 
 // Middleware
@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use('/api/imagenes', imagenesRoutes);
 // Asocia todas las rutas de imágenes bajo el prefijo de /api/imagenes
 
-app.use('/api/personas', require('./routes/personas.routes'));
+app.use('/api/personas', require('./backend/routes/personas.routes'));
 // Asocia todas las rutas de personas bajo el prefijo /api/personas
 
 module.exports = app;
