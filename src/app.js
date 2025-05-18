@@ -27,5 +27,8 @@ app.use('/api/imagenes', imagenesRoutes);
 app.use('/api/personas', require('./backend/routes/personas.routes'));
 // Asocia todas las rutas de personas bajo el prefijo /api/personas
 
+app.use('/api/proveedores', require('./backend/routes/proveedores.routes'));
+// Asocia todas las rutas de proveedores bajo el prefijo /api/proveedores
+
 module.exports = app;
 // Exporta la app configurada para ser utilizada por el archivo principal del servidor (en este caso el archivo server.js)

@@ -52,6 +52,8 @@ async function mostrarPersonas() {
             <td style="border: 1px solid #ddd; text-align: center; padding: 8px;">${persona.id_persona}</td>
             <td style="border: 1px solid #ddd; text-align: center; padding: 8px;">${persona.nombre}</td>
             <td style="border: 1px solid #ddd; text-align: center; padding: 8px;">${persona.apellido}</td>
+            <td style="border: 1px solid #ddd; text-align: center; padding: 8px;">${persona.tipo_identificacion}</td>
+            <td style="border: 1px solid #ddd; text-align: center; padding: 8px;">${persona.nuip}</td>
             <td style="border: 1px solid #ddd; text-align: center; padding: 8px;">${persona.email}</td>
             <td style="border: 1px solid #ddd; text-align: center; padding: 8px;">${persona.salario}</td>
             <td style="border: 1px solid #ddd; text-align: center; padding: 8px;">${imagenHTML}</td>

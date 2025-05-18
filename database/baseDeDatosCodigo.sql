@@ -19,3 +19,29 @@ CREATE TABLE IF NOT EXISTS personas (
 
 -- Ver los registros actuales de la tabla personas
 select * from personas;
+
+CREATE TABLE IF NOT EXISTS proveedores (
+id_proveedor INT AUTO_INCREMENT PRIMARY KEY,
+nombre_proveedor VARCHAR(255),
+NIT int,
+direccion varchar(150),
+telefono varchar(12)
+);
+
+CREATE TABLE IF NOT EXISTS ventas (
+id_venta INT AUTO_INCREMENT PRIMARY KEY,
+decripcion VARCHAR(300),
+precio decimal(10.2),
+cantidad int
+);
+
+CREATE TABLE IF NOT EXISTS productos (
+id_producto INT AUTO_INCREMENT PRIMARY KEY,
+nombre_producto VARCHAR(150),
+descripcion varchar(300),
+precio decimal(10.2)
+);
+
+select * from proveedores;
+select * from ventas;
+select * from productos;

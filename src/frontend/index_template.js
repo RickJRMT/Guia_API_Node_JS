@@ -67,10 +67,12 @@ async function mostrarPersonas() {
         tds[0].textContent = persona.id_persona;    // ID
         tds[1].textContent = persona.nombre;        // Nombre
         tds[2].textContent = persona.apellido;      // Apellido
-        tds[3].textContent = persona.email;         // Email
-        tds[4].textContent = persona.salario;       // Salario
-        tds[5].innerHTML = imagenHTML;              // Imagen (si existe, muestra imagen, si no, "Sin imagen")
-        tds[6].textContent = persona.activo;        // Activo
+        tds[3].textContent = persona.tipo_identificacion;      // Tipo Identificación
+        tds[4].textContent = persona.nuip;      // Nuip
+        tds[5].textContent = persona.email;         // Email
+        tds[6].textContent = persona.salario;       // Salario
+        tds[7].innerHTML = imagenHTML;              // Imagen (si existe, muestra imagen, si no, "Sin imagen")
+        tds[8].textContent = persona.activo;        // Activo
 
         // Busca los botones de editar y eliminar dentro del clon
         const btnEditar = clone.querySelector('.btn-editar');

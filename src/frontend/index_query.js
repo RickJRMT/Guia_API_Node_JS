@@ -88,8 +88,10 @@ async function mostrarPersonas() {
         celdas[0].textContent = persona.id_persona;
         celdas[1].textContent = persona.nombre;
         celdas[2].textContent = persona.apellido;
-        celdas[3].textContent = persona.email;
-        celdas[4].textContent = persona.salario;
+        celdas[3].textContent = persona.tipo_identificacion;
+        celdas[4].textContent = persona.nuip;
+        celdas[5].textContent = persona.email;
+        celdas[6].textContent = persona.salario;
 
         // Imagen por defecto
         let imagenHTML = 'Sin imagen';
@@ -105,8 +107,8 @@ async function mostrarPersonas() {
             console.error('Error al cargar imagen: ', error);
         }
 
-        celdas[5].innerHTML = imagenHTML;
-        celdas[6].textContent = persona.activo
+        celdas[7].innerHTML = imagenHTML;
+        celdas[8].textContent = persona.activo;
 
         // Botones de acción
         const btnEditar = clone.querySelector('.btn-editar');

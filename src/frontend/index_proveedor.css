@@ -1,0 +1,83 @@
+/* Estilos generales */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 20px;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Estilos del formulario */
+#proveedorForm {
+    margin-bottom: 20px;
+}
+
+#proveedorForm div {
+    margin-bottom: 10px;
+}
+
+#proveedorForm label {
+    display: inline-block;
+    width: 150px;
+}
+
+#proveedorForm input[type="text"],
+#proveedorForm input[type="number"] {
+    width: 200px;
+    padding: 5px;
+}
+
+#proveedorForm button {
+    margin-right: 10px;
+    padding: 5px;
+}
+
+/* Estilos de la tabla */
+#tablaProveedores {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+#tablaProveedores th,
+#tablaProveedores td {
+    border: 1px solid #ddd;
+    text-align: center;
+    padding: 8px;
+}
+
+#tablaProveedores th {
+    background-color: #f2f2f2;
+}
+
+/* Estilos de la imagen */
+#previewImagen {
+    max-width: 200px;
+    display: none;
+}
+
+/* Estilos de los botones */
+.btn-editar {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.btn-eliminar {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+/* Estilos para las imágenes en la tabla */
+#tablaProveedores img {
+    max-width: 100px;
+    max-height: 100px;
+}

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD de Personas e Imágenes N°3</title>
+    <link rel="stylesheet" href="index_proveedor.css">
+</head>
+
+<body>
+    <h1>Gestión de Personas N°3</h1>
+
+    <!-- Formulario para crear/editar personas -->
+    <form id="proveedorForm">
+        <input type="hidden" id="id_proveedor">
+        <!-- Campo oculto para almacenar el ID cuando se edita una persona -->
+
+        <!-- Contenedor <div> utilizado para mantener la estructura del formulario y facilitar el estilo con márgenes o diseño en bloque.
+        En esta variante, el <label> contiene  directamente al <input>, lo que simplifica el HTML y asegura la asociación entre ambos sin necesidad del atributo 'for'
+            Esta estructura también mejora la accesibilidad y permite que el hacer click sobre el texto del label se active el campo de entrada. -->
+
+        <div>
+            <label>Nombre proveedor
+                <input type="text" id="nombre_proveedor" required>
+            </label>
+        </div>
+
+        <div>
+            <label>Número de NIT:
+                <input type="number" id="nit" required>
+            </label>
+        </div>
+
+
+        <div>
+            <label>dirección:
+                <input type="number" id="direccion" required>
+            </label>
+        </div>
+        <div>
+            <label>Telefono:
+                <input type="number" id="telefono" required>
+            </label>
+        </div>
+
+        <button type="submit" id="btnGuardar">Guardar</button>
+        <button type="submit" id="btnCancelar">Cancelar</button>
+    </form>
+
+    <!-- Tabla para mostrar las personas -->
+    <table id="tablaProveedores">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre Proveedores</th>
+                <th>NIT</th>
+                <th>Direccion</th>
+                <th>Telefono</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="tablaProveedorBody">
+            <!-- Los datos se cargarán dinámicamente -->
+        </tbody>
+    </table>
+
+    <template id="template">
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="btn-editar">Editar</button>
+                <button class="btn-eliminar">Eliminar</button>
+            </td>
+        </tr>
+    </template>
+    <!-- Elemento <template> que actúa como una plantilla HTML reutilizable.
+        Define una fila (<tr>) con celdas vacías (<td>) que serán rellenadas dinámicamente con datos de personas desde JavaScript.
+            Esta técnica permite clonar la fila cuando se necesita mostrar neuvos registros sin tener que escribir el HTML desde cero cada vez.
+            Las últimas celdas incluten botones "Editar" y "Eliminar" con clases específicas para identificar y manejar eventos desde el script.
+            Este enfoque mejora la eficiencia del código y mantiene el HTML más limpio. -->
+    <script src="index_proveedor.js"></script>
+    <!-- Inclusión del archivo JavaScript externo 'index.js'.
+             Este script contiene la lógica del CRUD (Crear, Leer, Actualizar y Eliminar), así como la interacción con el formulario y la tabla.
+             Al cargarlo al final del body, se asgura que el DOM esté completamente disponible cuando el script se ejecute. -->
+</body>
+
+</html>
