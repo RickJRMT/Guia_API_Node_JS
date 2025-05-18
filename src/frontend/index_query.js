@@ -47,7 +47,7 @@ const campos = {
     email: document.querySelector('#email'),
     clave: document.querySelector('#clave'),
     salario: document.querySelector('#salario'),
-    activo: document.querySelector('#activo')
+    activo: document.querySelector('#activo'),
 };
 
 // ============================
@@ -76,11 +76,24 @@ async function cargarPersonas() {
     }
 }
 
+// Opcional, se agrega una funcion que permite formatear la fecha para que aparezca en la tabla (dia-mes-año o DD-MM-YYYY) y asi esta se muestre en la tabla
+function formatearFecha(fechaISO) {
+    if (!fechaISO) return 'Sin fecha';
+    const fecha = new Date(fechaISO);
+    if (isNaN(fecha.getTime())) return 'Fecha invalida';
+    const año = fecha.getFullYear();
+    const mes = String(fecha.getMonth() + 1).padStart(2, '0');
+    const dia = String(fecha.getDate()).padStart(2, '0');
+    return `${dia}/${mes}/${año}`;
+}
+
 // Muestra en la tabla todas las personas cargadas
 async function mostrarPersonas() {
     tablaBody.innerHTML = ''; // Limpiar tabla
 
-    personas.forEach(async persona => {
+    // personas.forEach(async persona => {
+    // Para tener un mejor control al momento de mostrar los datos en la tabla es recomendable ustilizar el "for ... of" ya que si se utiliza el forEach ocaciona que las filas se rendericen en un orden impredecible o que algunas imagenes no se carguen correctamente...
+    for (const persona of personas) {
         const clone = template.content.cloneNode(true); // Clonar template
         const celdas = clone.querySelectorAll('td');
 
@@ -109,6 +122,7 @@ async function mostrarPersonas() {
 
         celdas[7].innerHTML = imagenHTML;
         celdas[8].textContent = persona.activo;
+        celdas[9].textContent = formatearFecha(persona.fecha_registro);
 
         // Botones de acción
         const btnEditar = clone.querySelector('.btn-editar');
@@ -118,7 +132,7 @@ async function mostrarPersonas() {
         btnEliminar.addEventListener('click', () => eliminarPersona(persona.id_persona));
 
         tablaBody.appendChild(clone);
-    });
+    };
 }
 
 // Manejo del submit del formulario (crear o actualizar persona)
@@ -134,7 +148,7 @@ async function manejarSubmit(e) {
         email: campos.email.value,
         clave: campos.clave.value,
         salario: parseFloat(campos.salario.value),
-        activo: campos.activo.checked
+        activo: campos.activo.checked,
     };
 
     try {
@@ -242,6 +256,7 @@ async function editarPersona(persona) {
     campos.clave.value = persona.clave;
     campos.salario.value = persona.salario;
     campos.activo.checked = persona.activo;
+    campos.fecha_registro.value = persona.fecha_registro;
 
     // Cargar imagen
     try {
