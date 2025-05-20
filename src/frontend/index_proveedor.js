@@ -30,10 +30,6 @@ const btnGuardar = document.querySelector('#btnGuardar');
 // Botón para cancelar la edición
 const btnCancelar = document.querySelector('#btnCancelar');
 
-// Input de imagen y su previsualización
-// const inputImagen = document.querySelector('#imagen');
-// const previewImagen = document.querySelector('#previewImagen');
-
 // ============================
 // CAMPOS DEL FORMULARIO
 // ============================
@@ -41,7 +37,6 @@ const btnCancelar = document.querySelector('#btnCancelar');
 const campos = {
     id: document.querySelector('#id_proveedor'),
     nombre_proveedor: document.querySelector('#nombre_proveedor'),
-    nit: document.querySelector('#nit'),
     direccion: document.querySelector('#direccion'),
     telefono: document.querySelector('#telefono')
 };
@@ -54,7 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
     cargarProveedores(); // Cargar lista inicial
     form.addEventListener('submit', manejarSubmit); // Guardar datos
     btnCancelar.addEventListener('click', resetearFormulario); // Cancelar edición
-    inputImagen.addEventListener('change', manejarCambioImagen); // Cargar imagen
 });
 
 // =============================
@@ -66,6 +60,7 @@ async function cargarProveedores() {
     try {
         const response = await fetch(`${API_URL}/proveedores`);
         proveedores = await response.json();
+        console.log('Datos de proveedores:', proveedores); // Inspeccionar los datos
         mostrarProveedores();
     } catch (error) {
         console.error('Error al cargar proveedores: ', error);
@@ -83,25 +78,8 @@ async function mostrarProveedores() {
         // Llenar celdas con datos de la proveedor
         celdas[0].textContent = proveedor.id_proveedor;
         celdas[1].textContent = proveedor.nombre_proveedor;
-        celdas[2].textContent = proveedor.nit;
-        celdas[3].textContent = proveedor.direccion;
-        celdas[4].textContent = proveedor.telefono;
-
-        // Imagen por defecto
-        // let imagenHTML = 'Sin imagen';
-
-        // try {
-        //     const response = await fetch(`${API_URL}/imagenes/obtener/proveedores/id_proveedor/${proveedor.id_proveedor}`);
-        //     const data = await response.json();
-        //     if (data.imagen) {
-        //         imagenHTML = `<img src="data:image/jpeg;base64,${data.imagen}"
-        //         style="max-width: 100px; max-height: 100px;">`;
-        //     }
-        // } catch (error) {
-        //     console.error('Error al cargar imagen: ', error);
-        // }
-
-        // celdas[7].innerHTML = imagenHTML;
+        celdas[2].textContent = proveedor.direccion;
+        celdas[3].textContent = proveedor.telefono;
 
         // Botones de acción
         const btnEditar = clone.querySelector('.btn-editar');
@@ -121,7 +99,6 @@ async function manejarSubmit(e) {
     // Recolectar datos desde el formulario
     const proveedor = {
         nombre_proveedor: campos.nombre_proveedor.value,
-        nit: campos.nit.value,
         direccion: campos.direccion.value,
         telefono: campos.telefono.value
     };
@@ -130,31 +107,12 @@ async function manejarSubmit(e) {
         if (modoEdicion) {
             proveedor.id_proveedor = campos.id.value;
 
-            // if (inputImagen.files[0]) {
-            //     const imagenBase64 = await convertirImagenABase64(inputImagen.files[0]);
-            //     await fetch(`${API_URL}/imagenes/subir/proveedores/id_proveedor/${proveedor.id_proveedor}`, {
-            //         method: 'PUT',
-            //         headers: { 'Content-Type': 'application/json' },
-            //         body: JSON.stringify({ imagen: imagenBase64 })
-            //     });
-            // }
-
             await actualizarProveedor(proveedor);
         } else {
             const response = await crearProveedor(proveedor);
-
             if (!response.id) {
                 throw new Error('El servidor no devolvió el ID de la proveedor creada');
             }
-
-            // if (inputImagen.files[0]) {
-            //     const imagenBase64 = await convertirImagenABase64(inputImagen.files[0]);
-            //     await fetch(`${API_URL}/imagenes/insertar/proveedores/id_proveedor/${response.id}`, {
-            //         method: 'POST',
-            //         headers: { 'Content-Type': 'application/json' },
-            //         body: JSON.stringify({ imagen: imagenBase64 })
-            //     });
-            // }
         }
 
         resetearFormulario();
@@ -224,27 +182,8 @@ async function editarProveedor(proveedor) {
     // Cargar campos
     campos.id.value = proveedor.id_proveedor;
     campos.nombre_proveedor.value = proveedor.nombre_proveedor;
-    campos.nit.value = proveedor.nit;
     campos.direccion.value = proveedor.direccion;
     campos.telefono.value = proveedor.telefono;
-
-    // Cargar imagen
-    // try {
-    //     const response = await fetch(`${API_URL}/imagenes/obtener/proveedores/id_proveedor/${proveedor.id_proveedor}`);
-    //     const data = await response.json();
-
-    //     if (data.imagen) {
-    //         previewImagen.src = `data:image/jpeg;base64,${data.imagen}`;
-    //         previewImagen.style.display = 'block';
-    //     } else {
-    //         previewImagen.style.display = 'none';
-    //         previewImagen.src = '';
-    //     }
-    // } catch (error) {
-    //     console.error('Error al cargar imagen: ', error);
-    //     previewImagen.style.display = 'none';
-    //     previewImagen.src = '';
-    // }
 
     btnGuardar.textContent = 'Actualizar';
 }
@@ -253,40 +192,5 @@ async function editarProveedor(proveedor) {
 function resetearFormulario() {
     modoEdicion = false;
     form.reset();
-    previewImagen.style.display = 'none';
-    previewImagen.src = '';
     btnGuardar.textContent = 'Guardar';
-}
-
-// Previsualizar imagen cuando se selecciona una
-function manejarCambioImagen(e) {
-    const file = e.target.files[0];
-
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            previewImagen.src = e.target.result;
-            previewImagen.style.display = 'block';
-        };
-        reader.readAsDataURL(file);
-    } else {
-        previewImagen.style.display = 'none';
-        previewImagen.src = '';
-    }
-}
-
-// Convierte una imagen a Base64 para enviar al servidor
-function convertirImagenABase64(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-
-        reader.readAsDataURL(file);
-
-        reader.onload = () => {
-            const base64 = reader.result.split(',')[1]; // Quitar el prefijo MIME
-            resolve(base64);
-        };
-
-        reader.onerror = error => reject(error);
-    });
 }
