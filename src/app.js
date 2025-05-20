@@ -30,5 +30,8 @@ app.use('/api/personas', require('./backend/routes/personas.routes'));
 app.use('/api/proveedores', require('./backend/routes/proveedores.routes'));
 // Asocia todas las rutas de proveedores bajo el prefijo /api/proveedores
 
+app.use('/api/auth', require('./backend/routes/auth.routes'));
+// Asocia todas las rutas de auth bajo el prefijo /api/auth
+
 module.exports = app;
 // Exporta la app configurada para ser utilizada por el archivo principal del servidor (en este caso el archivo server.js)

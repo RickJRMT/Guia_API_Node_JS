@@ -20,10 +20,26 @@ CREATE TABLE IF NOT EXISTS personas (
 -- Ver los registros actuales de la tabla personas
 select * from personas;
 
+-- Ver los registros actuales de la tabla personas
+select * from personas;
+
+-- Crear tabla usuarios
+CREATE TABLE usuarios (
+    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100),
+    apellido VARCHAR(100),
+    telefono VARCHAR(20),
+    email VARCHAR(100) unique,
+    clave VARCHAR(500),
+    rol ENUM('cliente', 'admin', 'super_usuario') DEFAULT 'cliente',
+    fecha_registro DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+select * from usuarios;
+
 CREATE TABLE IF NOT EXISTS proveedores (
 id_proveedor INT AUTO_INCREMENT PRIMARY KEY,
 nombre_proveedor VARCHAR(255),
-NIT int,
 direccion varchar(150),
 telefono varchar(12)
 );
