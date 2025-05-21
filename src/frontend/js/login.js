@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const usuarioId = localStorage.getItem('usuarioId');
     if (usuarioId) {
         // Si ya está autenticado, redirigir a la pagina principal
-        window.location.href = 'index_template.html';
+        window.location.href = 'index_query.html';
     }
 });
 
@@ -48,7 +48,7 @@ async function manejarLogin(e) {
 
             // Redirgir a la pagina principal
             setTimeout(() => {
-                window.location.href = 'index_template.html';
+                window.location.href = 'index_query.html';
             }, 1000);
         } else {
             mostrarMensaje(resultado.message, false);

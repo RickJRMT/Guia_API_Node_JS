@@ -54,12 +54,80 @@ const campos = {
 // EVENTOS PRINCIPALES
 // ============================
 
+// document.addEventListener('DOMContentLoaded', () => {
+//     cargarPersonas(); // Cargar lista inicial
+//     form.addEventListener('submit', manejarSubmit); // Guardar datos
+//     btnCancelar.addEventListener('click', resetearFormulario); // Cancelar edición
+//     inputImagen.addEventListener('change', manejarCambioImagen); // Cargar imagen
+// });
+
+// Event Listeners
 document.addEventListener('DOMContentLoaded', () => {
-    cargarPersonas(); // Cargar lista inicial
-    form.addEventListener('submit', manejarSubmit); // Guardar datos
-    btnCancelar.addEventListener('click', resetearFormulario); // Cancelar edición
-    inputImagen.addEventListener('change', manejarCambioImagen); // Cargar imagen
+    // Verificar si el usuario está autenticado
+    verificarAutenticacion();
+
+    // Mostrar el nombre del usuario si está autenticado
+    const usuarioNombre = localStorage.getItem('usuarioNombre');
+    const usuarioApellido = localStorage.getItem('usuarioApellido');
+
+    if (usuarioNombre && usuarioApellido) {
+        const infoUsuario = document.createElement('div');
+        infoUsuario.innerHTML = `
+        <p>Bienvenido, ${usuarioNombre} ${usuarioApellido} |
+        <a href="#" id="btnCerrarSesion">Cerrar sesión</a>
+        </p>
+        `;
+        document.body.insertBefore(infoUsuario, document.body.firstChild);
+
+        // Agregar listener para cerrar sesión
+        document.getElementById('btnCerrarSesion').addEventListener('click', cerrarSesion);
+    }
+
+    cargarPersonas();
 });
+
+// Verificar autenticación
+function verificarAutenticacion() {
+    const usuarioId = localStorage.getItem('usuarioId');
+
+    if (!usuarioId) {
+        // Si no hay ID de usuario, redirigir al login
+        window.location.href = 'login.html';
+        return;
+    }
+
+    // Verificar con el servidor si el usuario es válido
+    fetch(`${API_URL}/auth/verificar/${usuarioId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Sesión inválida');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (!data.success) {
+                // Si la verificación falla, limpiar localStorage y redirigir
+                localStorage.clear();
+                window.location.href = 'login.html';
+            }
+        })
+        .catch(error => {
+            console.error('Error al verificar sesión: ', error);
+            localStorage.clear();
+            window.location.href = 'login.html';
+        });
+}
+
+// Cerrar sesión
+function cerrarSesion(e) {
+    e.preventDefault();
+
+    // Limpiar datos de autenticacion del localStorage
+    localStorage.clear();
+
+    // Redirigir al login
+    window.location.href = 'login.html';
+}
 
 // =============================
 // FUNCIONES DE LÓGICA

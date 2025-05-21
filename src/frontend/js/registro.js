@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const usuarioId = localStorage.getItem('usuarioId');
     if (usuarioId) {
         // Si ya está autenticado, redirigir a la página principal
-        window.location.href = 'index_template.html';
+        window.location.href = 'index_query.html';
     }
 });
 
