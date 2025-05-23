@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (usuarioId) {
         // Si ya está autenticado, redirigir a la pagina principal
         window.location.href = 'index_query.html';
+        // window.location.href = 'index_template.html';
     }
 });
 
@@ -49,6 +50,7 @@ async function manejarLogin(e) {
             // Redirgir a la pagina principal
             setTimeout(() => {
                 window.location.href = 'index_query.html';
+                // window.location.href = 'index_template.html';
             }, 1000);
         } else {
             mostrarMensaje(resultado.message, false);

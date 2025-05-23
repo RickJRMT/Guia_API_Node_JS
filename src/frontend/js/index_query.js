@@ -48,6 +48,7 @@ const campos = {
     clave: document.querySelector('#clave'),
     salario: document.querySelector('#salario'),
     activo: document.querySelector('#activo'),
+    fecha_registro: document.querySelector("#fecha_registro")
 };
 
 // ============================
@@ -83,7 +84,10 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('btnCerrarSesion').addEventListener('click', cerrarSesion);
     }
 
-    cargarPersonas();
+    cargarPersonas(); // Cargar lista inicial
+    form.addEventListener('submit', manejarSubmit); // Guardar datos
+    btnCancelar.addEventListener('click', resetearFormulario); // Cancelar edición
+    inputImagen.addEventListener('change', manejarCambioImagen); // Cargar imagen
 });
 
 // Verificar autenticación
@@ -146,18 +150,18 @@ async function cargarPersonas() {
 
 // Opcional, se agrega una funcion que permite formatear la fecha para que aparezca en la tabla (dia-mes-año o DD-MM-YYYY) y asi esta se muestre en la tabla
 function formatearFecha(fechaISO) {
-// Verifica si no se proporciona una fecha (este seria null o undefined o una cadena vacia)
+    // Verifica si no se proporciona una fecha (este seria null o undefined o una cadena vacia)
     if (!fechaISO) return 'Sin fecha';
-// Crea un objeto Date a partir de la fecha en formato ISO
+    // Crea un objeto Date a partir de la fecha en formato ISO
     const fecha = new Date(fechaISO);
     if (isNaN(fecha.getTime())) return 'Fecha invalida';
     // Obtiene el año completo (como por ejemplo 2025)
     const año = fecha.getFullYear();
     // Obtiene el mes (0-11) y suma 1 para que sea 1-12, luego lo convierte a cadena y se asegura que tenga 2 digitos
     const mes = String(fecha.getMonth() + 1).padStart(2, '0');
-// Obtiene el dia del mes y lo convierte a cadena, asegurando que tenga 2 digitos
+    // Obtiene el dia del mes y lo convierte a cadena, asegurando que tenga 2 digitos
     const dia = String(fecha.getDate()).padStart(2, '0');
-// Este retorna la fecha formateada como DD/MM/YYYY (un ejemplo seria 22/06/2004)
+    // Este retorna la fecha formateada como DD/MM/YYYY (un ejemplo seria 22/06/2004)
     return `${dia}/${mes}/${año}`;
 }
 
@@ -223,6 +227,9 @@ async function manejarSubmit(e) {
         clave: campos.clave.value,
         salario: parseFloat(campos.salario.value),
         activo: campos.activo.checked,
+        // fecha_registro: new Date().toISOString()
+        // fecha_registro: campos.fecha_registro.value || new Date().toISOString()
+
     };
 
     try {
@@ -271,6 +278,7 @@ async function crearPersona(persona) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(persona)
     });
+    // console.log("Persona a guardar:", persona);
 
     if (!response.ok) {
         throw new Error(`Error HTTP: ${response.status}`);

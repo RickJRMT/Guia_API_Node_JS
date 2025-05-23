@@ -165,7 +165,7 @@ async function manejarSubmit(e) {
         nombre: document.getElementById('nombre').value,
         apellido: document.getElementById('apellido').value,
         tipo_identificacion: document.getElementById('tipo_identificacion').value,
-        nuip: parseInt(document.getElementById('nuip')).value,
+        nuip: parseInt(document.getElementById('nuip').value),
         email: document.getElementById('email').value,
         clave: document.getElementById('clave').value,
         salario: parseFloat(document.getElementById('salario').value),
@@ -192,7 +192,7 @@ async function manejarSubmit(e) {
             const nuevaPersona = await crearPersona(persona); // Crear persona
             if (imagenInput.files[0]) {
                 const imagenBase64 = await convertirImagenABase64(imagenInput.files[0]);
-                await fetch(`${API_URL}/imagenes/insertar/personas/id_persona/${nuevaPersona}`, {
+                await fetch(`${API_URL}/imagenes/insertar/personas/id_persona/${nuevaPersona.id}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ imagen: imagenBase64 })
@@ -232,7 +232,7 @@ async function eliminarPersona(id) {
     if (confirm('¿Está seguro de eliminar esta persona')) {
         try {
             await fetch(`${API_URL}/imagenes/eliminar/personas/id_persona/${id}`, { method: 'DELETE' }); // Elimina imagen
-            await fetch(`${API_URL}/persona/${id}`, { method: 'DELETE' }); //Elimina persona
+            await fetch(`${API_URL}/personas/${id}`, { method: 'DELETE' }); //Elimina persona
             cargarPersonas(); // Recarga la lista
         } catch (error) {
             console.error('Error al eliminar persona: ', error);
